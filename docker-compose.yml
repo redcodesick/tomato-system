@@ -92,19 +92,37 @@ services:
       - 7359:7359/udp
       - 8920:8920
     restart: unless-stopped
+### get this  https://github.com/toddrob99/searcharr in ./packages/searcharr folder
+### Rename settings-sample.py to settings.py, and edit the settings within the file as necessary.
+### then deploy
+#  searcharr:
+#    container_name: potato-searcharr
+#    image: toddrob/searcharr:latest
+#    env_file: .env
+#    volumes:
+#      - ./packages/searcharr/data:/app/data
+#      - ./packages/searcharr/logs:/app/logs
+#      - ./packages/searcharr/settings.py:/app/settings.py
+#    environment:
+#      - TZ=Europe/Bucharest
+#    restart: unless-stopped
+#   network_mode: host
 
-  searcharr:
-    container_name: potato-searcharr
-    image: toddrob/searcharr:latest
-    env_file: .env
-    volumes:
-      - ./packages/searcharr/data:/app/data
-      - ./packages/searcharr/logs:/app/logs
-      - ./packages/searcharr/settings.py:/app/settings.py
+  ouroboros:
+    container_name: tomato-ouroboros
+    hostname: ouroboros
+    image: pyouroboros/ouroboros
     environment:
+      - CLEANUP=true
+      - INTERVAL=300
+      - LOG_LEVEL=info
+      - SELF_UPDATE=true
+      - IGNORE=mongo influxdb postgres mariadb
       - TZ=Europe/Bucharest
     restart: unless-stopped
-    network_mode: host
+    env_file: .env
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
 
 volumes:
   radarr-config:
