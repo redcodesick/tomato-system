@@ -3,12 +3,12 @@ name: nginx
 services:
   nginx:
     image: nginx:1.23.1-alpine
-    container_name: nginx
+    container_name: tomato-nginx
     networks:
-      - mynetwork
+      - tomato-network
     volumes:
-      - nginx-config:/etc/nginx
-      - letsencrypt:/etc/letsencrypt
+      - ./packages/nginx/nginx-config:/etc/nginx
+      - ./packages/nginx/letsencrypt:/etc/letsencrypt
     ports:
       - 80:80
       - 443:443
@@ -19,5 +19,5 @@ volumes:
   letsencrypt:
 
 networks:
-  mynetwork:
+  tomato-network:
     external: true
