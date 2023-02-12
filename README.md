@@ -129,7 +129,7 @@ location /jackett/ {
 
 - Restart containers
 
-# Transmission Nginx reverse proxy
+# Deluge Nginx reverse proxy
 
 - Add below proxy in Nginx config
 
